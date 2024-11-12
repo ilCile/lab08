@@ -1,10 +1,15 @@
 package it.unibo.mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.TextField;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,13 +38,25 @@ public class MiniGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        final JPanel panel = new JPanel();
+        final BoxLayout b = new BoxLayout(panel, BoxLayout.LINE_AXIS);
+        panel.setLayout(b);   
+        //canvas.removeAll();  
+        canvas.add(panel, BorderLayout.CENTER);
+        panel.add(write);
+        final JLabel text = new JLabel("Result");
+        canvas.add(text, BorderLayout.NORTH);
+        
         /*
          * Handlers
          */
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
+                int num = randomGenerator.nextInt();
+                System.out.println(num);
+                text.setText("" + num);
             }
         });
     }
