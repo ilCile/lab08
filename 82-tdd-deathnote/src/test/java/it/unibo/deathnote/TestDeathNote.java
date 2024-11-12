@@ -32,6 +32,7 @@ class TestDeathNote {
         try{
             deathNote.getRule(0);
             deathNote.getRule(-1);
+            deathNote.getRule(DeathNote.RULES.size());
             fail("It was supposed to throw an exception");
         }catch(IllegalArgumentException e){
             assertNotNull(e);
