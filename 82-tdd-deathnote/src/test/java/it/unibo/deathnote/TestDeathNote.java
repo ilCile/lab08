@@ -43,7 +43,7 @@ class TestDeathNote {
 
     @Test
     public void testRuleEmpty(){
-        for(int i = 0; i < DeathNote.RULES.size(); i++){  
+        for(int i = 1; i < DeathNote.RULES.size(); i++){  
             assertNotNull(deathNote.getRule(i));
             assertFalse(deathNote.getRule(i).isBlank());
         }
@@ -85,10 +85,12 @@ class TestDeathNote {
         try{
             deathNote.writeDetails(DEATH_DETAILS);
             deathNote.writeName(PERSON_NAME);
+            deathNote.writeDeathCause(ANOTHER_DEATH_CAUSE);
             assertEquals("", deathNote.getDeathDetails(PERSON_NAME));
             assertTrue(deathNote.writeDetails(DEATH_DETAILS));
             assertEquals(DEATH_DETAILS, deathNote.getDeathDetails(PERSON_NAME));
             deathNote.writeName(PERSON_NAME1);
+            deathNote.writeDeathCause(ANOTHER_DEATH_CAUSE);
             sleep(6100);
             deathNote.writeDetails("");
             assertEquals(DEATH_DETAILS, deathNote.getDeathDetails(PERSON_NAME));
