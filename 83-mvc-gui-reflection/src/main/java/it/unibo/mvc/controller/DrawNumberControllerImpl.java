@@ -5,7 +5,7 @@ import it.unibo.mvc.api.DrawNumberController;
 import it.unibo.mvc.api.DrawNumberView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Objects;
 public final class DrawNumberControllerImpl implements DrawNumberController {
 
     private final DrawNumber model;
-    private List<DrawNumberView> views = new ArrayList<>();
+    private Collection<DrawNumberView> views = new ArrayList<>();
 
     /**
      * Builds a new game controller provided a game model.

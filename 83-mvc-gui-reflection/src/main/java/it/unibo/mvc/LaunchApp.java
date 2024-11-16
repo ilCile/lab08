@@ -1,6 +1,13 @@
 package it.unibo.mvc;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import it.unibo.mvc.api.DrawNumberController;
+import it.unibo.mvc.api.DrawNumberView;
 import it.unibo.mvc.controller.DrawNumberControllerImpl;
 import it.unibo.mvc.model.DrawNumberImpl;
 import it.unibo.mvc.view.DrawNumberConsoleView;
@@ -24,10 +31,36 @@ public final class LaunchApp {
      * @throws IllegalAccessException in case of reflection issues
      * @throws IllegalArgumentException in case of reflection issues
      */
-    public static void main(final String... args) {
+    @SuppressWarnings("unchecked")
+    public static void main(final String... args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         final var model = new DrawNumberImpl();
         final DrawNumberController app = new DrawNumberControllerImpl(model);
-        app.addView(new DrawNumberSwingView());
-        app.addView(new DrawNumberConsoleView());
+
+        Class<DrawNumberConsoleView> console = DrawNumberConsoleView.class;
+        Constructor<DrawNumberConsoleView> consoleConstructor = null;
+        for(var constructor : console.getConstructors()){
+            if(constructor.getParameterCount() == 0){
+                consoleConstructor = (Constructor<DrawNumberConsoleView>) constructor;
+            }
+        }
+        Class<DrawNumberSwingView> swing = DrawNumberSwingView.class;
+        Constructor<DrawNumberSwingView> swingConstructor = null;
+        for(var constructor : swing.getConstructors()){
+            if(constructor.getParameterCount() == 0){
+                swingConstructor = (Constructor<DrawNumberSwingView>) constructor;
+            }
+        }
+
+        List<DrawNumberView> instancesList = new ArrayList<>();
+        instancesList = Arrays.asList(consoleConstructor.newInstance(),
+                            consoleConstructor.newInstance(),
+                            consoleConstructor.newInstance(),
+                            swingConstructor.newInstance(),
+                            swingConstructor.newInstance(),
+                            swingConstructor.newInstance());
+        
+        for(var instance : instancesList){
+            app.addView(instance);
+        }
     }
 }
